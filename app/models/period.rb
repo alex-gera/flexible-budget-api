@@ -5,12 +5,14 @@ class Period < ApplicationRecord
   after_create :create_days
 
   def create_days
-    (since..until).each do |date|
+    range = (since .. self.until)
+
+    range.each do |date|
       Day.create(date: date)
     end
   end
 
-  def calculate_period_money_flows(leftover) do
+  def calculate_period_money_flows(leftover)
     period_money_flows.map do |period_money_flow|
       {
         id: period_money_flow.id,
