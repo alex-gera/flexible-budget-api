@@ -4,12 +4,9 @@ class CreateDays < ActiveRecord::Migration[5.2]
       t.date :date, null: false
       t.integer :daily_budget, null: false
       t.integer :balance, null: false
+      t.references :period, index: true, foreign_key: true
 
       t.timestamps
-    end
-
-    change_table :money_flows do |t|
-      t.belongs_to :day, index: true
     end
   end
 end
