@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 2018_12_08_153454) do
 
   create_table "days", force: :cascade do |t|
     t.date "date", null: false
-    t.integer "daily_budget", null: false
-    t.integer "balance", null: false
+    t.integer "daily_budget"
+    t.integer "balance"
     t.bigint "period_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -36,8 +36,9 @@ ActiveRecord::Schema.define(version: 2018_12_08_153454) do
   end
 
   create_table "period_money_flows", force: :cascade do |t|
-    t.string "description", null: false
+    t.integer "kind", null: false
     t.integer "amount", null: false
+    t.string "description", null: false
     t.bigint "period_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
