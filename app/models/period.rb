@@ -1,8 +1,8 @@
 class Period < ApplicationRecord
   after_create :create_days
 
-  has_many :period_money_flows
-  has_many :days, -> { order(date: :asc) }
+  has_many :period_money_flows, dependent: :destroy
+  has_many :days, -> { order(date: :asc) }, dependent: :destroy
 
   def create_days
     range = (since .. self.until)
@@ -52,7 +52,7 @@ class Period < ApplicationRecord
   end
 
   def self.calculate_all
-    Period.all.order(since: :desc).map do |period|
+    Period.all.order(since: :asc).map do |period|
       income_money_flows = period.calculate_period_money_flows(0)
       expense_money_flows = period.calculate_period_money_flows(1)
       income = income_money_flows[:total] - expense_money_flows[:total] - (period[:accumulation] || 0)
@@ -68,7 +68,7 @@ class Period < ApplicationRecord
         days: days,
         income: income,
         dailyBudget: daily_budget,
-        accumulation: period.accumulation,
+        accumulation: period.accumulation || 0,
         balance: income - days[:total]
       }
     end
