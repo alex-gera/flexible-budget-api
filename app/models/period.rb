@@ -12,7 +12,7 @@ class Period < ApplicationRecord
     end
   end
 
-  def calculate_period_money_flows(kind, leftover)
+  def calculate_period_money_flows(kind)
     money_flows = period_money_flows.where(kind: kind)
     items = money_flows.map do |period_money_flow|
       {
@@ -55,7 +55,7 @@ class Period < ApplicationRecord
     Period.all.order(since: :desc).map do |period|
       income_money_flows = period.calculate_period_money_flows(0)
       expense_money_flows = period.calculate_period_money_flows(1)
-      income = income_money_flows[:total] - expense_money_flows[:total]
+      income = income_money_flows[:total] - expense_money_flows[:total] - (period[:accumulation] || 0)
       daily_budget = income/period.days.size
       days = period.calculate_period_days(period, daily_budget)
 
@@ -68,7 +68,7 @@ class Period < ApplicationRecord
         days: days,
         income: income,
         dailyBudget: daily_budget,
-        accumulation: 0,
+        accumulation: period.accumulation,
         balance: income - days[:total]
       }
     end
