@@ -22,6 +22,6 @@ class MoneyFlowsController < ApplicationController
   private
 
   def money_flow_params
-    params.require(:money_flow).permit(:description, :amount, :kind, :day_id)
+    params.require(:moneyFlow).permit(:description, :amount, :kind, :day_id)
   end
 end
