@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :periods do
-
-  end
+  resources :periods
+  resources :period_money_flows
+  resources :money_flows
 end
