@@ -1,24 +1,8 @@
-# README
+# FlexibleBudget api
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Development
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* install Ruby 2.4.4
+* run `bundle install`
+* create database and run migrations: `rails db:create db:migrate`
+* start server `rails s`
