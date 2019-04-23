@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :income, class: MoneyFlow do
     kind { 0 }
-    category { "salary" }
-    amount { Faker::Number.between(5000, 10000) }
+    category { 'salary' }
+    amount { Faker::Number.between(5000, 10_000) }
     expected_date { Faker::Date.forward(30) }
     repeating { true }
   end

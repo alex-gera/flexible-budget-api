@@ -1,13 +1,13 @@
 class BudgetCalculator
   def self.calc
     @budget = Budget.last
-    @budget.update(self.properties)
-    self.daily_budget()
+    @budget.update(properties)
+    daily_budget
     @budget
   end
-  
+
   private
-  
+
   def self.daily_budget
     days_count = (@budget.finished_at - @budget.start_at).to_i
     average_daily_budget = @budget.income / days_count
@@ -27,7 +27,7 @@ class BudgetCalculator
 
       period_days_count.times do |i|
         day = Day.new(date: income.expected_date + i, daily_budget: daily_budget, balance: balance, budget_id: @budget.id)
-        balance = balance + daily_budget
+        balance += daily_budget
         period.push day
         puts "DAY: daily_budget: #{day.daily_budget}, balance: #{day.balance}"
       end
@@ -36,19 +36,19 @@ class BudgetCalculator
     end
     # byebug
   end
-  
-  def self.properties
-    self.entities()
 
-    expected_expenditure = @expenditure_money_flows.select { |m| !m.actual_date }.sum { |m| m.amount }
-    total_expenditure = @expenditure_money_flows.sum { |m| m.amount }
-    total_income = @income_money_flows.sum { |m| m.amount }
+  def self.properties
+    entities
+
+    expected_expenditure = @expenditure_money_flows.reject(&:actual_date).sum(&:amount)
+    total_expenditure = @expenditure_money_flows.sum(&:amount)
+    total_income = @income_money_flows.sum(&:amount)
     accumulation = total_income / 100 * @accumulator_money_flow.amount
 
     {
       income: total_income - expected_expenditure - accumulation,
       balance: total_income - total_expenditure - accumulation,
-      accumulation: accumulation,
+      accumulation: accumulation
     }
   end
 

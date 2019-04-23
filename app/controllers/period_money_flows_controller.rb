@@ -2,9 +2,7 @@ class PeriodMoneyFlowsController < ApplicationController
   def index; end
 
   def create
-    if PeriodMoneyFlow.create(money_flow_params)
-      render json: {}, status: :ok
-    end
+    render json: {}, status: :ok if PeriodMoneyFlow.create(money_flow_params)
   end
 
   def update
@@ -14,9 +12,7 @@ class PeriodMoneyFlowsController < ApplicationController
   end
 
   def destroy
-    if PeriodMoneyFlow.find(params[:id]).destroy
-      render json: {}, status: :ok
-    end
+    render json: {}, status: :ok if PeriodMoneyFlow.find(params[:id]).destroy
   end
 
   private
