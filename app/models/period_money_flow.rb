@@ -3,7 +3,7 @@ class PeriodMoneyFlow < ApplicationRecord
   belongs_to :period
 
   # === Enums
-  enum kind: %i[income expense]
+  enum kind: [:income, :expense]
 
   # === Validations
   validates :kind, presence: true
