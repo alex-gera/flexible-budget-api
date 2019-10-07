@@ -1,13 +1,13 @@
 class UserTokenController < Knock::AuthTokenController
+  skip_before_action :verify_authenticity_token
+
   def create
-    resp = {
+    response = {
       id: @entity.id,
-      role: @entity.role,
       email: @entity.email,
-      jwt: auth_token.token,
-      franchiseOwner: @entity.franchise_owner?
+      jwt: auth_token.token
     }
-    render json: resp, status: :created
+    render json: response, status: :created
   end
 
   private
